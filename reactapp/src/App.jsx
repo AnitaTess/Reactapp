@@ -11,8 +11,46 @@ const FILTER_MAP = {
 };
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-
+//App function
 function App(props) {
+
+    //geolocation
+    function geoFindMe() {
+  
+  
+      function success(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+    
+        // Get the city name from the OpenCage Geocoder API
+        fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=49352c6399a04850b1d5a27833bd8fe8&language=en`)
+          .then(response => response.json())
+          .then(data => {
+            const city = data.results[0].components.city;
+            if (city) {
+              console.log("city found");
+            } else {
+              console.log("city not found");
+            }
+            locateTask(lastInsertedId, {latitude: latitude, longitude: longitude, city: city, error: ""});
+          })
+          .catch(error => {
+            console.log("city not found");
+          });
+      
+        }
+    
+      function error() {
+        console.log("unable to retrive location!");
+      }
+    
+      if (!navigator.geolocation) {
+        console.log("Geolocation is not supported by your browser");
+      } else {
+        console.log("locating");
+        navigator.geolocation.getCurrentPosition(success, error);
+      }
+    }
 
   const [tasks, setTasks] = useState(() => {
     const initialValue = localStorage.getItem('todo-items')
@@ -21,13 +59,16 @@ function App(props) {
   });
 
   const [filter, setFilter] = useState('All');
+  const [lastInsertedId, setLastInsertedId] = useState("");
 
   useEffect(() => {
     localStorage.setItem('todo-items', JSON.stringify(tasks));
   },[tasks])
 
   function addTask(name) {
-    const newTask = { id: `todo-${nanoid()}`, name, completed: false };
+    const id = "todo-" + nanoid();
+    const newTask = { id: id, name, completed: false, location: {latitude:"", longitude:"", error:"", city:""} };
+    setLastInsertedId(id);
     setTasks([...tasks, newTask]);
   }    
 
@@ -61,6 +102,17 @@ function App(props) {
     setTasks(editedTaskList);
   }  
 
+  function locateTask(id, location) {
+    const locatedTaskList = tasks.map((task) => {
+      // if this task has the same ID as the edited task
+        if (id === task.id) { return {...task, location: location}
+      }
+      return task;
+    });
+    setTasks(locatedTaskList);
+  }  
+  
+
   const taskList = tasks
 .filter(FILTER_MAP[filter])
 .map((task) => (
@@ -69,6 +121,9 @@ function App(props) {
     name={task.name}
     completed={task.completed}
     key={task.id}
+    latitude={task.location.latitude}
+    longitude={task.location.longitude}
+    city={task.location.city}
     toggleTaskCompleted={toggleTaskCompleted}
     deleteTask={deleteTask}
     editTask={editTask}
@@ -86,12 +141,13 @@ function App(props) {
   
   const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
   const headingText = `${taskList.length} ${tasksNoun} remaining`;
-  
     
+  
+  //render
   return (
     <div className="todoapp stack-large">
-      <h1>TodoMatic</h1>
-      <Form addTask={addTask} />
+      <h1>What&Where</h1>
+      <Form addTask={addTask} geoFindMe={geoFindMe} />
       <div className="filters btn-group stack-exception">
       {filterList}
       </div>

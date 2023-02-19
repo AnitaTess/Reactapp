@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Form(props) {
+  const [addition, setAddition] = useState(false);
   const [name, setName] = useState("");
+
+  useEffect(() => {
+    if (addition){
+      props.geoFindMe();
+      setAddition(false);
+    }
+  });
 
   function handleChange(e) {
     setName(e.target.value);
@@ -9,6 +17,7 @@ function Form(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setAddition(true);
     props.addTask(name);
     setName("");
   }
@@ -16,7 +25,7 @@ function Form(props) {
     <form onSubmit={handleSubmit}>
       <h2 className="label-wrapper">
         <label htmlFor="new-todo-input" className="label__lg">
-          What needs to be done?
+          What are you up to right now?
         </label>
       </h2>
       <input
