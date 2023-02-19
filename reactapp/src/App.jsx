@@ -16,8 +16,7 @@ function App(props) {
 
     //geolocation
     function geoFindMe() {
-  
-  
+      
       function success(position) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
@@ -124,6 +123,7 @@ function App(props) {
     latitude={task.location.latitude}
     longitude={task.location.longitude}
     city={task.location.city}
+    mapLink={`https://www.openstreetmap.org/#map=18/${task.location.latitude}/${task.location.longitude}`}
     toggleTaskCompleted={toggleTaskCompleted}
     deleteTask={deleteTask}
     editTask={editTask}
