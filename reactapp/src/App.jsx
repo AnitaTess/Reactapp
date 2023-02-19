@@ -31,7 +31,7 @@ function App(props) {
             } else {
               console.log("city not found");
             }
-            locateTask(lastInsertedId, {latitude: latitude, longitude: longitude, city: city, error: ""});
+            locateTask(lastInsertedId, {latitude: latitude, longitude: longitude, city: city, error: "", mapLink: ""});
           })
           .catch(error => {
             console.log("city not found");
