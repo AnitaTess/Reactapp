@@ -31,7 +31,7 @@ function App(props) {
             } else {
               console.log("city not found");
             }
-            locateTask(lastInsertedId, {latitude: latitude, longitude: longitude, city: city, error: ""});
+            locateTask(lastInsertedId, {latitude: latitude, longitude: longitude, city: city, error: "", mapLink: ""});
           })
           .catch(error => {
             console.log("city not found");
@@ -66,7 +66,7 @@ function App(props) {
 
   function addTask(name) {
     const id = "todo-" + nanoid();
-    const newTask = { id: id, name, completed: false, location: {latitude:"", longitude:"", error:"", city:""} };
+    const newTask = { id: id, name, completed: false, location: {latitude:"", longitude:"", error:"", city:"", mapLink: ""} };
     setLastInsertedId(id);
     setTasks([...tasks, newTask]);
   }    
@@ -123,6 +123,7 @@ function App(props) {
     latitude={task.location.latitude}
     longitude={task.location.longitude}
     city={task.location.city}
+    mapLink={`https://www.openstreetmap.org/#map=18/${task.location?.latitude ?? ''}/${task.location?.longitude ?? ''}`}
     toggleTaskCompleted={toggleTaskCompleted}
     deleteTask={deleteTask}
     editTask={editTask}
