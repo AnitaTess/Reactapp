@@ -123,7 +123,7 @@ function App(props) {
     latitude={task.location.latitude}
     longitude={task.location.longitude}
     city={task.location.city}
-    mapLink={`https://www.openstreetmap.org/#map=18/${task.location.latitude}/${task.location.longitude}`}
+    mapLink={`https://www.openstreetmap.org/#map=18/${task.location?.latitude ?? ''}/${task.location?.longitude ?? ''}`}
     toggleTaskCompleted={toggleTaskCompleted}
     deleteTask={deleteTask}
     editTask={editTask}
