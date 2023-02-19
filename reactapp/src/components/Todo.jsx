@@ -56,7 +56,6 @@ export default function Todo(props) {
                 | la {props.latitude}
                 | lo {props.longitude}
               </label>
-              <a href={props.mapLink}>Map</a>
             </div>
             <div className="btn-group">
             <button type="button" className="btn" onClick={() => setEditing(true)}>
