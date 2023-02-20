@@ -110,7 +110,16 @@ function App(props) {
     });
     setTasks(locatedTaskList);
   }  
-  
+
+  function photoedTask(id){
+    const photoedTaskList = tasks.map(task =>{
+      if(id === task.id){
+        return{...task, photo: true}
+      }
+      return task;
+    });
+    setTasks(photoedTaskList);
+  }
 
   const taskList = tasks
 .filter(FILTER_MAP[filter])
@@ -125,6 +134,7 @@ function App(props) {
     city={task.location.city}
     mapLink={`https://www.openstreetmap.org/#map=18/${task.location?.latitude ?? ''}/${task.location?.longitude ?? ''}`}
     toggleTaskCompleted={toggleTaskCompleted}
+    photoedTask={photoedTask}
     deleteTask={deleteTask}
     editTask={editTask}
   />
@@ -141,8 +151,7 @@ function App(props) {
   
   const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
   const headingText = `${taskList.length} ${tasksNoun} remaining`;
-    
-  
+
   //render
   return (
     <div className="todoapp stack-large">

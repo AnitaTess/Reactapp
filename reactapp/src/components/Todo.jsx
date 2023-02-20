@@ -1,4 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import Webcam from 'react-webcam';
+import { addPhoto, GetPhotoSrc} from "../db.jsx"
+
+const WebcamCapture = (props) => {
+  const webcamRef = React.useRef(null);
+  const [imgSrc, setImgSrc] = React.useState(null);
+  const [ImgId, setImgId] = React.useState(null);
+  const [PhotoSave, setPhotoSave] = React.useState(false);
+
+  useEffect(() => {
+    if (PhotoSave) {
+      props.photoedTask(ImgId);
+      setPhotoSave(false);
+    }
+  });
+
+  const capture = React.useCallback((id) => {
+    const ImageSrc = webcamRef.current.getScreenshot();
+    setImgSrc(ImageSrc);
+  },
+  [webcamRef, setImgSrc]);
+  const SavePhoto = (id, imgSrc) => {
+    console.log("photosave detected")
+    addPhoto(id, imgSrc);
+    console.log("pic added")
+    setImgId(id);
+    console.log("img id set")
+    setPhotoSave(true);
+    console.log("pic saved")
+  }
+  const cancelPhoto = (id, imgSrc) => {
+    console.log("cancel", imgSrc.length, id);
+  }
+  return(
+<>
+{!imgSrc && (<Webcam
+  audio = {false}
+  ref={webcamRef}
+  screenshotFormat = "image/jpeg"
+ /> )}
+ {imgSrc && (<img src={imgSrc}/>)}
+ <div className="btn-group">
+  {!imgSrc && (<button type="button" className="btn" onClick={()=>capture(props.id)}>Capture Photo</button>)}
+  {imgSrc && (<button type="button" className="btn" onClick={()=>SavePhoto(props.id,imgSrc)}>Save Photo</button>)}
+  <button type="button" className="btn" onClick={()=>cancelPhoto(props.id,imgSrc)}>Cancel</button>
+ </div>
+</>
+  );
+};
+//Retrieving photo by id from IndexedDBusing GetPhotoSrcin db.jsx
+const ViewPhoto = (props) => {
+  const photoSrc = GetPhotoSrc(props.id);
+  //Render image tag with srcattribute set to data URL retrieved from IndexedDB
+  return(
+    <>
+    <div>
+      <img src={photoSrc} alt={props.name}/>
+    </div>
+    </>
+  )
+}
+
 export default function Todo(props) {
 
     const [isEditing, setEditing] = useState(false);
@@ -62,6 +126,12 @@ export default function Todo(props) {
             <button type="button" className="btn" onClick={() => setEditing(true)}>
   Edit <span className="visually-hidden">{props.name}</span>
 </button>
+<Popup trigger={<button type="button" className="btn">Selfie!</button>} modal>
+  <div><WebcamCapture id={props.id} photoedTask={props.photoedTask}/></div>
+</Popup>
+<Popup trigger={<button type="button" className="btn">View Photo</button>} modal>
+  <div><ViewPhoto id={props.id} alt={props.name}/></div>
+</Popup>
               <button
                 type="button"
                 className="btn btn__danger"
