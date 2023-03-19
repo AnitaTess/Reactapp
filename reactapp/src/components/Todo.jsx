@@ -4,6 +4,7 @@ import 'reactjs-popup/dist/index.css';
 import Webcam from 'react-webcam';
 import { addPhoto, GetPhotoSrc} from "../db.jsx"
 
+
 const WebcamCapture = (props) => {
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(null);
@@ -116,9 +117,11 @@ export default function Todo(props) {
               />
               <label className="todo-label" htmlFor={props.id}>
                 {props.name}
-                &nbsp; from {props.city}
+                &nbsp; at {props.date} from {props.city}
                 | la {props.latitude}
                 | lo {props.longitude}
+                | {props.temperature}°C
+                | {props.condition} <img src={props.iconUrl} alt="weather icon" />
               </label>
               <a href={props.mapLink}>Map</a>
             </div>

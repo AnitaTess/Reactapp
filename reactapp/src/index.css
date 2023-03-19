@@ -53,6 +53,11 @@ input {
 input[type="text"] {
   border-radius: 0;
 }
+
+.weather-container{
+  text-align: center;
+}
+
 body {
   width: 100%;
   max-width: 68rem;
@@ -285,5 +290,9 @@ body {
 }
 .c-cb > input[type="checkbox"]:checked + label::after {
   opacity: 1;
+}
+
+.weather-container{
+  text-align: center;
 }
 
