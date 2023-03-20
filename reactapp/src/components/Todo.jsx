@@ -5,6 +5,7 @@ import Webcam from 'react-webcam';
 import { addPhoto, GetPhotoSrc} from "../db.jsx"
 
 
+
 const WebcamCapture = (props) => {
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(null);
@@ -32,21 +33,19 @@ const WebcamCapture = (props) => {
     setPhotoSave(true);
     console.log("pic saved")
   }
-  const cancelPhoto = (id, imgSrc) => {
-    console.log("cancel", imgSrc.length, id);
-  }
   return(
 <>
 {!imgSrc && (<Webcam
   audio = {false}
   ref={webcamRef}
+  height={350}
+  width={350}
   screenshotFormat = "image/jpeg"
  /> )}
  {imgSrc && (<img src={imgSrc}/>)}
  <div className="btn-group">
   {!imgSrc && (<button type="button" className="btn" onClick={()=>capture(props.id)}>Capture Photo</button>)}
   {imgSrc && (<button type="button" className="btn" onClick={()=>SavePhoto(props.id,imgSrc)}>Save Photo</button>)}
-  <button type="button" className="btn" onClick={()=>cancelPhoto(props.id,imgSrc)}>Cancel</button>
  </div>
 </>
   );
@@ -54,7 +53,7 @@ const WebcamCapture = (props) => {
 //Retrieving photo by id from IndexedDBusing GetPhotoSrcin db.jsx
 const ViewPhoto = (props) => {
   const photoSrc = GetPhotoSrc(props.id);
-  //Render image tag with srcattribute set to data URL retrieved from IndexedDB
+  //Render image tag with src attribute set to data URL retrieved from IndexedDB
   return(
     <>
     <div>
@@ -107,33 +106,56 @@ export default function Todo(props) {
         </form>
       );
       const viewTemplate = (
+        <div className="all">
+          <a className="dangerous">Dangerous?</a>
         <div className="stack-small">
           <div className="c-cb">
+            
               <input
                 id={props.id}
                 type="checkbox"
                 defaultChecked={props.completed}
                 onChange={() => props.toggleTaskCompleted(props.id)}
               />
+              
               <label className="todo-label" htmlFor={props.id}>
-                {props.name}
-                &nbsp; at {props.date} from {props.city}
+                {props.name}</label>
+                <div className="both">
+                
+                  <p>
+                <br></br> at {props.date} 
+                <br></br> from {props.city}
                 | la {props.latitude}
                 | lo {props.longitude}
-                | {props.temperature}°C
-                | {props.condition} <img src={props.iconUrl} alt="weather icon" />
-              </label>
-              <a href={props.mapLink}>Map</a>
-            </div>
+                <br></br> {props.temperature}°C
+                | {props.condition} 
+                </p>
+                
+               
+                <img width={50} src={props.iconUrl} alt="weather icon" />
+                
+                </div>
+              </div>
+              <div className="map-container">
+                <div className="lefto">
+              <a href={props.mapLink}>Map</a></div>
+      <iframe
+        title="OpenStreetMap"
+        width="100%"
+        height="400"
+        src={`https://www.openstreetmap.org/export/embed.html?bbox=${props.longitude},${props.latitude},${props.longitude},${props.latitude}&layer=mapnik&marker=${props.latitude},${props.longitude}`}
+      ></iframe>
+    </div>
+           
             <div className="btn-group">
             <button type="button" className="btn" onClick={() => setEditing(true)}>
   Edit <span className="visually-hidden">{props.name}</span>
 </button>
-<Popup trigger={<button type="button" className="btn">Selfie!</button>} modal>
-  <div><WebcamCapture id={props.id} photoedTask={props.photoedTask}/></div>
+<Popup contentStyle={{width: "450px",alignItems: "center", justifyContent: "center", textAlign: "center"}} overlayStyle={{ display: "flex", alignItems: "center", justifyContent: "center"}} trigger={<button type="button" className="btn">Selfie!</button>} modal>
+  <div className="webcam-capture"><WebcamCapture id={props.id} photoedTask={props.photoedTask}/></div>
 </Popup>
-<Popup trigger={<button type="button" className="btn">View Photo</button>} modal>
-  <div><ViewPhoto id={props.id} alt={props.name}/></div>
+<Popup contentStyle={{width: "450px",alignItems: "center", justifyContent: "center", textAlign: "center"}} trigger={<button type="button" className="btn">View Photo</button>} modal>
+  <div className="view-photo"><ViewPhoto id={props.id} alt={props.name}/></div>
 </Popup>
               <button
                 type="button"
@@ -143,6 +165,7 @@ export default function Todo(props) {
                 Delete <span className="visually-hidden">{props.name}</span>
               </button>
             </div>
+        </div>
         </div>
       );      
 

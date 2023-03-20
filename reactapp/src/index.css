@@ -153,24 +153,23 @@ body {
 .todoapp {
   background: #fff;
   margin: 2rem 0 4rem 0;
-  padding: 1rem;
   position: relative;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2.5rem 5rem 0 rgba(0, 0, 0, 0.1);
 }
 @media screen and (min-width: 550px) {
-  .todoapp {
+  .todoa {
     padding: 4rem;
   }
 }
-.todoapp > * {
+.todoa > * {
   max-width: 50rem;
   margin-left: auto;
   margin-right: auto;
 }
-.todoapp > form {
+.todoa > form {
   max-width: 100%;
 }
-.todoapp > h1 {
+.todoa > h1 {
   display: block;
   max-width: 100%;
   text-align: center;
@@ -242,8 +241,8 @@ body {
   box-sizing: border-box;
   top: -2px;
   left: -2px;
-  width: 44px;
-  height: 44px;
+  width: 55px;
+  height: 55px;
 }
 .c-cb > input[type="checkbox"] {
   -webkit-font-smoothing: antialiased;
@@ -259,9 +258,10 @@ body {
   line-height: inherit;
   display: inline-block;
   margin-bottom: 0;
-  padding: 8px 15px 5px;
+  padding: 0px 20px 0px;
   cursor: pointer;
   touch-action: manipulation;
+  margin-top: 15px;
 }
 .c-cb > label::before {
   content: "";
@@ -271,22 +271,23 @@ body {
 }
 .c-cb > input[type="checkbox"]:focus + label::before {
   border-width: 4px;
-  outline: 3px dashed #228bec;
+  outline: 3px solid #bd2130;
 }
 .c-cb > label::after {
   box-sizing: content-box;
   content: "";
   position: absolute;
-  top: 11px;
+  top: 14px;
   left: 9px;
-  width: 18px;
-  height: 7px;
+  width: 30px;
+  height: 10px;
   transform: rotate(-45deg);
   border: solid;
   border-width: 0 0 5px 5px;
   border-top-color: transparent;
   opacity: 0;
   background: transparent;
+  border-color: #bd2130;
 }
 .c-cb > input[type="checkbox"]:checked + label::after {
   opacity: 1;
@@ -296,3 +297,52 @@ body {
   text-align: center;
 }
 
+.map-container{
+  display: block;
+  text-align: center;
+}
+
+.all{
+  padding: 10px;
+border: solid black;
+}
+
+.lefto{
+text-align: left;
+}
+
+.both{
+  text-align: center;
+}
+
+.dangerous{
+  font-size: 10px !important;
+}
+
+.menu{
+  background-color: #228bec;
+  padding: 10px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.menl{
+  display: inline;
+  text-align: left;
+}
+
+.menr{
+  display: inline;
+text-align: right;
+right: 0px;
+position: absolute;
+padding-top: 30px;
+padding-right: 20px;
+}
+
+.wp{
+  padding-top: 30px;
+  padding-left: 5px;
+  display: inline;
+  position: absolute;
+}

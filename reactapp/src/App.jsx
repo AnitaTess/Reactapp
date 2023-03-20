@@ -7,8 +7,8 @@ import { nanoid } from "nanoid";
 
 const FILTER_MAP = {
   All: () => true,
-  Active: (task) => !task.completed,
-  Completed: (task) => task.completed
+  Safe: (task) => !task.completed,
+  Dangerous: (task) => task.completed
 };
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
@@ -175,13 +175,24 @@ function App(props) {
     />
   ));
   
-  const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
-  const headingText = `${taskList.length} ${tasksNoun} remaining`;
+  const tasksNoun = taskList.length !== 1 ? 'Entries' : 'Entry';
+  const headingText = `${taskList.length} ${tasksNoun}`;
 
   //render
   return (
-    <div className="todoapp stack-large">
-      <h1>ParentPal</h1>
+    <div className="todoapp">
+      <div className="menu">
+        <div className="menl">
+<img width={80} className="logo" src="\icons\theicon.png" alt="weatherpal logo"></img>
+        </div>
+        <div className="wp"><a>WeatherPal</a></div>
+        <div className="menr">
+<a>About</a>
+        </div>
+      </div>
+      <div className="todoa stack-large">
+      <h1>WeatherPal</h1>
+      <h4>Easy way to alert others about the weather conditions in your area. Stay safe!</h4>
       <Banner />
       <Form addTask={addTask} geoFindMe={geoFindMe} />
       <div className="filters btn-group stack-exception">
@@ -195,6 +206,7 @@ function App(props) {
       >
         {taskList}
       </ul>
+    </div>
     </div>
   );
 }
