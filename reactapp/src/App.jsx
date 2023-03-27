@@ -2,8 +2,10 @@ import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 import Banner from "./components/Banner"
 import Todo from "./components/Todo";
+import Info from "./components/Info";
 import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
+import Popup from 'reactjs-popup';
 
 const FILTER_MAP = {
   All: () => true,
@@ -187,7 +189,9 @@ function App(props) {
         </div>
         <div className="wp"><a>WeatherPal</a></div>
         <div className="menr">
-<a>About</a>
+        <Popup contentStyle={{width: "450px",alignItems: "center", justifyContent: "center", textAlign: "center"}} overlayStyle={{ display: "flex", alignItems: "center", justifyContent: "center"}} trigger={<button id="flag">?</button>} modal>
+  <div className="webcam-capture"><Info/></div>
+</Popup>
         </div>
       </div>
       <div className="todoa stack-large">

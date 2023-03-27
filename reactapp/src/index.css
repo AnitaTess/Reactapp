@@ -98,11 +98,12 @@ body {
   border-color: #bd2130;
 }
 .btn__filter {
-  border-color: lightgrey;
+  border-color: black;
 }
 .btn__primary {
   color: #fff;
-  background-color: #000;
+  background-color: #228bec;
+  border-color: white;
 }
 .btn-group {
   display: flex;
@@ -305,6 +306,8 @@ body {
 .all{
   padding: 10px;
 border: solid black;
+box-shadow: 10px 5px 5px gray;
+z-index: 2;
 }
 
 .lefto{
@@ -336,7 +339,7 @@ text-align: left;
 text-align: right;
 right: 0px;
 position: absolute;
-padding-top: 30px;
+padding-top: 15px;
 padding-right: 20px;
 }
 
@@ -345,4 +348,31 @@ padding-right: 20px;
   padding-left: 5px;
   display: inline;
   position: absolute;
+}
+
+.tabbtn{
+  width: 100%;
+  background-color: darkgreen;
+  color: #fff;
+  height: 50px;
+  box-shadow: 10px 5px 5px gray;
+  z-index: 3;
+}
+.tabbtn.completed {
+  background-color: #bd2130;
+  color: #fff;
+}
+
+#flag{
+  color: #228bec;
+  font-size: 40px;
+  border: #fff solid 5px;
+  border-radius: 5px 20px 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #fff;
+}
+
+.lista{
+  text-align: left;
 }

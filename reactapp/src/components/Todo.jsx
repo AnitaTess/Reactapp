@@ -4,8 +4,6 @@ import 'reactjs-popup/dist/index.css';
 import Webcam from 'react-webcam';
 import { addPhoto, GetPhotoSrc} from "../db.jsx"
 
-
-
 const WebcamCapture = (props) => {
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(null);
@@ -64,6 +62,7 @@ const ViewPhoto = (props) => {
 }
 
 export default function Todo(props) {
+  const [showContent, setShowContent] = useState(false);
 
     const [isEditing, setEditing] = useState(false);
     const [newName, setNewName] = useState('');
@@ -105,7 +104,14 @@ export default function Todo(props) {
           </div>
         </form>
       );
+
       const viewTemplate = (
+        <div id="cont">
+      <button className={`tabbtn ${props.completed ? 'completed' : ''}`} onClick={() => setShowContent(!showContent)}>
+        {showContent ? '➘ ' + props.name : '➙ ' + props.name }
+      </button>
+      {showContent && (
+        <div>
         <div className="all">
           <a className="dangerous">Dangerous?</a>
         <div className="stack-small">
@@ -116,6 +122,7 @@ export default function Todo(props) {
                 type="checkbox"
                 defaultChecked={props.completed}
                 onChange={() => props.toggleTaskCompleted(props.id)}
+                
               />
               
               <label className="todo-label" htmlFor={props.id}>
@@ -146,7 +153,8 @@ export default function Todo(props) {
         src={`https://www.openstreetmap.org/export/embed.html?bbox=${props.longitude},${props.latitude},${props.longitude},${props.latitude}&layer=mapnik&marker=${props.latitude},${props.longitude}`}
       ></iframe>
     </div>
-           
+    
+
             <div className="btn-group">
             <button type="button" className="btn" onClick={() => setEditing(true)}>
   Edit <span className="visually-hidden">{props.name}</span>
@@ -167,6 +175,9 @@ export default function Todo(props) {
             </div>
         </div>
         </div>
+        </div>
+        )}
+    </div>
       );      
 
       return <li className="todo">{isEditing ? editingTemplate : viewTemplate}</li>;
