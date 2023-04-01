@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import Webcam from 'react-webcam';
@@ -9,6 +9,7 @@ const WebcamCapture = (props) => {
   const [imgSrc, setImgSrc] = React.useState(null);
   const [ImgId, setImgId] = React.useState(null);
   const [PhotoSave, setPhotoSave] = React.useState(false);
+  const [facingMode, setFacingMode] = React.useState("user"); // "user" for front camera, "environment" for back camera
 
   useEffect(() => {
     if (PhotoSave) {
@@ -30,7 +31,10 @@ const WebcamCapture = (props) => {
     console.log("img id set")
     setPhotoSave(true);
     console.log("pic saved")
-  }
+  };
+  const switchCamera = () => {
+    setFacingMode(facingMode === "user" ? "environment" : "user");
+  };
   return(
 <>
 {!imgSrc && (<Webcam
@@ -39,10 +43,12 @@ const WebcamCapture = (props) => {
   height={350}
   width={350}
   screenshotFormat = "image/jpeg"
+  videoConstraints={{ facingMode }}
  /> )}
  {imgSrc && (<img src={imgSrc}/>)}
  <div className="btn-group">
   {!imgSrc && (<button type="button" className="btn" onClick={()=>capture(props.id)}>Capture Photo</button>)}
+  {!imgSrc && (<button type="button" className="btn" onClick={switchCamera}>Switch Camera</button>)}
   {imgSrc && (<button type="button" className="btn" onClick={()=>SavePhoto(props.id,imgSrc)}>Save Photo</button>)}
  </div>
 </>
