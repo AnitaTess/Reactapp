@@ -28,5 +28,13 @@ function GetPhotoSrc(id) {
       return img[0].imgSrc;
     }
   };
+
+  async function deletePhoto(id) {
+    try {
+      await db.photos.where('id').equals(id).delete();
+    } catch (error) {
+      console.log('Failed to delete photo');
+    }
+  }
   
-  export { addPhoto, GetPhotoSrc };
+  export { addPhoto, GetPhotoSrc, deletePhoto };

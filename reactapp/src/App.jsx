@@ -6,6 +6,7 @@ import Info from "./components/Info";
 import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import Popup from 'reactjs-popup';
+import { deletePhoto} from "./db.jsx"
 
 const FILTER_MAP = {
   All: () => true,
@@ -108,6 +109,7 @@ function App(props) {
   function deleteTask(id) {
     const remainingTasks = tasks.filter((task) => id !== task.id);
     setTasks(remainingTasks);
+    deletePhoto(id);
   }  
 
   function editTask(id, newName) {
